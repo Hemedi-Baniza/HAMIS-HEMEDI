@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Form Validation</title>
+<style>
+    .error { color: red; }
+</style>
+</head>
+<body>
+<h2>Form Validation</h2>
+<form id="myForm" onsubmit="return validateForm()">
+    <label for="name">Name*:</label>
+    <input type="text" id="name" name="name" maxlength="20" required> <span class="error" id="nameError"></span><br><br>
+    
+    <label for="address">Address:</label>
+    <textarea id="address" name="address" rows="4" cols="50"></textarea><br><br>
+
+    <label for="gender">Gender*:</label>
+    <select id="gender" name="gender" required>
+        <option value="" disabled selected>Select your gender</option>
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+        <option value="other">Other</option>
+    </select><br><br>
+
+    <label for="phone">Phone:</label>
+    <input type="tel" id="phone" name="phone"><br><br>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email"><br><br>
+
+    <label for="country">Country:</label>
+    <select id="country" name="country">
+        <option value="" disabled selected>Select your country</option>
+        <option value="USA">United States</option>
+        <option value="UK">United Kingdom</option>
+        <option value="Canada">Canada</option>
+        <!-- Add more countries as needed -->
+    </select><br><br>
+
+    <label for="preferences">Preferences* (Select at least two colors):</label><br>
+    <input type="checkbox" name="preferences" value="red"> Red<br>
+    <input type="checkbox" name="preferences" value="blue"> Blue<br>
+    <input type="checkbox" name="preferences" value="green"> Green<br><br>
+    <span class="error" id="preferencesError"></span><br><br>
+
+    <label for="password">Password*:</label>
+    <input type="password" id="password" name="password" required> <span class="error" id="passwordError"></span><br><br>
+    
+    <label for="verifyPassword">Verify Password*:</label>
+    <input type="password" id="verifyPassword" name="verifyPassword" required> <span class="error" id="verifyPasswordError"></span><br><br>
+    
+    <input type="submit" value="Submit">
+</form>
+
+<script>
+    function validateForm() {
+        let isValid = true;
+        const name = document.getElementById('name').value;
+        const address = document.getElementById('address').value;
+        const gender = document.getElementById('gender').value;
+        const phone = document.getElementById('phone').value;
+        const email = document.getElementById('email').value;
+        const country = document.getElementById('country').value;
+        const preferences = document.querySelectorAll('input[name="preferences"]:checked');
+        const password = document.getElementById('password').value;
+        const verifyPassword = document.getElementById('verifyPassword').value;
+
+        // Resetting error messages
+        document.getElementById('nameError').textContent = "";
+        document.getElementById('preferencesError').textContent = "";
+        document.getElementById('passwordError').textContent = "";
+        document.getElementById('verifyPasswordError').textContent = "";
+
+        // Name validation
+        if (name.length > 20) {
+            document.getElementById('nameError').textContent = "Name must be less than or equal to 20 characters";
+            isValid = false;
+        }
+
+        // Preferences validation
+        if (preferences.length < 2) {
+            document.getElementById('preferencesError').textContent = "Please select at least two colors";
+            isValid = false;
+        }
+
+        // Password validation
+        if (password !== verifyPassword) {
+            document.getElementById('passwordError').textContent = "Passwords do not match";
+            isValid = false;
+        }
+
+        return isValid;
+    }
+</script>
+</body>
+</html>
